@@ -1,6 +1,7 @@
-package com.bbende.messaging;
+package com.bbende.messaging.ws;
 
-import com.bbende.messaging.rabbit.RabbitService;
+import com.bbende.messaging.Message;
+import com.bbende.messaging.rabbit.RabbitMessageRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,32 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/messages")
-public class MessageRestController {
+@WebSocketProfile
+@RequestMapping("/websocket")
+public class WebSocketMessageRestController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageRestController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMessageRestController.class);
 
-    private final RabbitService rabbitService;
     private final SimpMessagingTemplate wsMessagingTemplate;
     private final String wsMessagesTopic;
 
-    public MessageRestController(final RabbitService rabbitService,
-                                 final SimpMessagingTemplate simpMessagingTemplate,
+    public WebSocketMessageRestController(final SimpMessagingTemplate simpMessagingTemplate,
                                  @Value("${stomp.messages.topic:/topic/messages}")
                                  final String messagesTopic) {
-        this.rabbitService = rabbitService;
         this.wsMessagingTemplate = simpMessagingTemplate;
         this.wsMessagesTopic = messagesTopic;
     }
 
-    @PostMapping(path = "/rabbit", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String publishMessageWithRabbit(@RequestBody Message message) {
-        LOGGER.info("REST Controller [/messages/rabbit] received message: {}", message.getMessage());
-        rabbitService.sendMessage(message);
-        return message.getMessage();
-    }
-
-    @PostMapping(path = "/ws", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/messages", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String publishMessageWithWebSocket(@RequestBody Message message) {
         LOGGER.info("REST Controller [/messages/ws] received message: {}", message.getMessage());
         LOGGER.info("Sending message [{}] to WebSocket destination [{}]", message.getMessage(), wsMessagesTopic);

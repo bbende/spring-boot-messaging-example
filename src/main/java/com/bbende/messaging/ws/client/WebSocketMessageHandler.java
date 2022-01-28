@@ -1,6 +1,7 @@
 package com.bbende.messaging.ws.client;
 
 import com.bbende.messaging.Message;
+import com.bbende.messaging.ws.WebSocketProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Type;
 
 @Component
+@WebSocketProfile
 public class WebSocketMessageHandler extends StompSessionHandlerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketMessageHandler.class);

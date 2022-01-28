@@ -1,10 +1,12 @@
 package com.bbende.messaging.ws.client;
 
+import com.bbende.messaging.ws.WebSocketProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
@@ -12,6 +14,7 @@ import javax.annotation.PreDestroy;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
+@WebSocketProfile
 public class WebSocketMessageClient implements ApplicationListener<ApplicationReadyEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketMessageClient.class);

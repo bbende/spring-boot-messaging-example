@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@RabbitProfile
 public class RabbitService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitService.class);

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RabbitProfile
 public class RabbitConfig {
 
     public static final String EXCHANGE_NAME = "test-exchange";
