@@ -37,7 +37,7 @@ Start second application instance:
 Send a Rabbit message to first application instance:
 
 ```
-curl -H "Content-Type: application/json" -X POST "http://localhost:8080/messages/rabbit" --data '{"message":"foo1"}'
+curl -H "Content-Type: application/json" -X POST "http://localhost:8080/rabbit/messages" --data '{"message":"foo1"}'
 ```
 
 Both instances of the application should log:
@@ -49,7 +49,7 @@ Both instances of the application should log:
 Send a WebSocket message to first application instance:
 
 ```
-curl -H "Content-Type: application/json" -X POST "http://localhost:8080/messages/ws" --data '{"message":"foo2"}'
+curl -H "Content-Type: application/json" -X POST "http://localhost:8080/websocket/messages" --data '{"message":"foo2"}'
 ```
 
 Both instances of the application should log:
