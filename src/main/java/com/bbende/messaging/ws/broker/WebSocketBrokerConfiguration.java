@@ -1,5 +1,6 @@
 package com.bbende.messaging.ws.broker;
 
+import com.bbende.messaging.ws.WebSocketProfile;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ import java.net.URI;
 import java.security.KeyStore;
 
 @Configuration
-@Profile("websocket")
+@WebSocketProfile
 @EnableWebSocketMessageBroker
 public class WebSocketBrokerConfiguration implements WebSocketMessageBrokerConfigurer {
 
