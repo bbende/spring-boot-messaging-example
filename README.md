@@ -57,3 +57,34 @@ Both instances of the application should log:
 ``` 
 2022-01-26 17:01:53.506  INFO 65523 --- [lient-AsyncIO-4] c.b.m.ws.client.WebSocketMessageHandler  : WebSocketMessageHandler received message: foo2
 ```
+
+## TLS
+
+To configure RabbitMQ for TLS, create the file `RABBIT_HOME/etc/rabbitmq/rabbitmq.conf` with the following content:
+
+``` 
+listeners.ssl.default = 5671
+stomp.listeners.ssl.1 = 61614
+
+ssl_options.cacertfile = /path/to/your-ca.pem
+ssl_options.certfile   = /path/to/localhost-cert.pem
+ssl_options.keyfile    = /path/to/localhost-key.pem
+ssl_options.verify     = verify_peer
+ssl_options.fail_if_no_peer_cert = true
+```
+
+This creates a TLS TCP listener on port `5671` for standard AMQP messaging, and a TLS STOMP listener on port `61614` for enabling TLS on the STOMP relay.
+
+Launch the application setting `spring.profiles.active=rabbit,websocket,tls`.
+
+Also provide the keystore and truststore properties by editing `application-tls.properties`, or by providing 
+the following environment variables:
+
+``` 
+SPRING_RABBITMQ_SSL_KEYSTORE=file:///path/to/localhost-keystore.jks
+SPRING_RABBITMQ_SSL_KEYSTORETYPE=JKS
+SPRING_RABBITMQ_SSL_KEYSTOREPASSWORD=keystore-password
+SPRING_RABBITMQ_SSL_TRUSTSTORE=file:///path/to/localhost-truststore.jks
+SPRING_RABBITMQ_SSL_TRUSTSTORETYPE=JKS
+SPRING_RABBITMQ_SSL_TRUSTSTOREPASSWORD=truststore-password
+```
